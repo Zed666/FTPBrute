@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+# Python 3.4
 
 #Модули
 import ftplib;
@@ -12,7 +12,7 @@ import queue;
 
 #Функция скана каждый поток ее использует
 def Scan(i, IP, FOutputFileName, Lock, LoginList, PasswordList):
-	#Бсконечный цикл
+	#Бесконечный цикл
 	while True:
 		#Пустой список с адресами логинами и паролями
 		Adress = [];
@@ -22,7 +22,7 @@ def Scan(i, IP, FOutputFileName, Lock, LoginList, PasswordList):
 		Ad = IP.get();
 		#Получаем текущюю дату и время
 		DateTime = str(datetime.datetime.now());
-		#Выод того ип шо брутим +длинна списка
+		#Вывод того ип шо брутим +длинна списка
 		print ("\x1b[37m %s - Thread %i Brute %s - %i \x1b[0m" % (DateTime, i, Ad[:-1], IP.qsize()));
 		#Цикл по логинам
 		for Login in LoginList:
@@ -35,13 +35,13 @@ def Scan(i, IP, FOutputFileName, Lock, LoginList, PasswordList):
 				try:
 					#Конектимся к серву
 					con = ftplib.FTP(Ad, Login, Password, 2);
-					#Опять получпем дату и время
+					#Опять получаем дату и время
 					DateTime = str(datetime.datetime.now());
 					#Выводим то что подконектились
 					print ("\x1b[32m %s - Thread %i IP %s Login and Pass FOUND !!! %s:%s \x1b[0m" % (DateTime, i, Ad[:-1], Login, Password));
 					#Закрывам соединение
 					con.close;
-					#Добовляем ип и логин и пароль в список
+					#Добавляем ип и логин и пароль в список
 					Adress.append(Ad[:-1] +":"+ Login +":"+ Password);
 					#Выставляем флаг, который обрывает внешний цикл (по логинам)
 					FLAG = True;
@@ -100,19 +100,19 @@ def Main():
 	else:
 		#Проверка на существование файлов
 		if (os.path.exists(args.IP) != True):
-			print ("\x1b[31m" +str(datetime.datetime.now()) + " - IP List file no found\x1b[0m");
+			print ("\x1b[31m - %s IP List file no found\x1b[0m" % str(datetime.datetime.now()));
 			exit();
 		if (os.path.exists(args.LoginsFile) != True):
-			print ("\x1b[31m" +str(datetime.datetime.now()) + " - Login file no found\x1b[0m");
+			print ("\x1b[31m %s - Login file no found\x1b[0m" % str(datetime.datetime.now()));
 			exit();
 		if (os.path.exists(args.PasswordsFile) != True):
-			print ("\x1b[31m" +str(datetime.datetime.now()) + " - Password file no found\x1b[0m");
+			print ("\x1b[31m %s - Password file no found\x1b[0m" % str(datetime.datetime.now()));
 			exit();
 		if (os.path.exists(args.OutputFile) != True):
-			print ("\x1b[31m" +str(datetime.datetime.now()) + " - Output file no found\x1b[0m");
+			print ("\x1b[31m %s - Output file no found\x1b[0m" % str(datetime.datetime.now()));
 			exit();
 		#Пишем что скан запущен
-		print ("\x1b[34m" +str(datetime.datetime.now()) + " - Scan Starting...\x1b[0m");
+		print ("\x1b[34m %s - Scan Starting...\x1b[0m" % str(datetime.datetime.now()));
 
 		#Считываем логины в список
 		LoginFile = open(args.LoginsFile, 'r');
@@ -125,7 +125,7 @@ def Main():
 		#Считываем айпишники в список
 		IpFile = open(args.IP, 'r');
 		for line in IpFile.readlines():
-			#Добовляем в очередь ип из списка 
+			#Добавляем в очередь ип из списка 
 			IPList.put(line);
 
 		#Блокировка
